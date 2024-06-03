@@ -1,0 +1,41 @@
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;49r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[49;1H"/tmp/kubectl-edit-2482382538.yaml" 127L, 3333C[1;1H# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    meta.helm.sh/release-name: loki
+    meta.helm.sh/release-namespace: loki
+  creationTimestamp: "2024-06-03T10:02:46Z"
+  generation: 2
+  labels:
+    app: loki
+    app.kubernetes.io/managed-by: Helm
+    chart: loki-2.16.0
+    heritage: Helm
+    release: loki
+  name: loki
+  namespace: loki
+  resourceVersion: "15006"
+  uid: 50c7ee71-61df-4187-b6b4-c5eed629ca26
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:[32;7Happ: loki[33;7Hrelease: loki
+  serviceName: loki-headless
+  template:
+    metadata:[37;7Hannotations:[38;9Hchecksum/config: f7c516d64b976f04d4c31a243b6c2091ced173f942f6315d3ee2ba37ca7c0bd9[39;9Hprometheus.io/port: http-metrics[40;9Hprometheus.io/scrape: "true"[41;7HcreationTimestamp: null[42;7Hlabels:[43;9Happ: loki[44;9Hname: loki[45;9Hrelease: loki
+    spec:[47;7Haffinity: {}[48;7Hcontainers:[1;1H[?25h[?25l[49;1HType  :qa!  and press <Enter> to abandon all changes and exit Vim[1;1H[?25h[?25l[?25h[?25l[49;1H[K[49;1H:[?2004h[?25hwq[?25l[49;3H[K[49;3H[?25h::q![?25l"::q!" [New] 127L, 3333C written[1;1H[?25h
+
+
+
+
+[?25l[49;1HType  :qa!  and press <Enter> to abandon all changes and exit Vim[6;1H[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[?25h[?25l[49;1H[K[49;1H:[?2004h[?25h::::::::wq[?25l[?2004l"/tmp/kubectl-edit-2482382538.yaml" 127L, 3333C written
+[?2004l[?1l>[?25h[?1049l[23;0;0t

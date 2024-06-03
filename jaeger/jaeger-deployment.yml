@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: jaeger
+    meta.helm.sh/release-namespace: jaeger
+  creationTimestamp: "2024-06-03T18:47:37Z"
+  generation: 2
+  labels:
+    app.kubernetes.io/component: collector
+    app.kubernetes.io/instance: jaeger
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/version: 1.53.0
+    helm.sh/chart: jaeger-3.0.9
+  name: jaeger-collector
+  namespace: jaeger
+  resourceVersion: "96846"
+  #uid: 72424121-995a-472d-8be6-f42032deb3bc
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: collector
+      app.kubernetes.io/instance: jaeger
+      app.kubernetes.io/name: jaeger
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/config-env: 75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: collector
+        app.kubernetes.io/instance: jaeger
+        app.kubernetes.io/name: jaeger
+    spec:
+      containers:
+      - env:
+        - name: SPAN_STORAGE_TYPE
+          value: cassandra
+        - name: CASSANDRA_SERVERS
+          value: jaeger-cassandra
+        - name: CASSANDRA_PORT
+          value: "9042"
+        - name: CASSANDRA_KEYSPACE
+          value: jaeger_v1_test
+        - name: CASSANDRA_USERNAME
+          value: user
+        - name: CASSANDRA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: jaeger-cassandra
+        image: jaegertracing/jaeger-collector:1.53.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: admin
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: jaeger-collector
+        ports:
+        - containerPort: 14250
+          name: grpc
+          protocol: TCP
+        - containerPort: 14268
+          name: http
+          protocol: TCP
+        - containerPort: 14269
+          name: admin
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: admin
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: jaeger-collector
+      serviceAccountName: jaeger-collector
+      terminationGracePeriodSeconds: 30

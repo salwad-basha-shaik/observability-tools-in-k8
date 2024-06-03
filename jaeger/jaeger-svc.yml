@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: jaeger
+    meta.helm.sh/release-namespace: jaeger
+  creationTimestamp: "2024-06-03T18:47:37Z"
+  labels:
+    app.kubernetes.io/component: collector
+    app.kubernetes.io/instance: jaeger
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/version: 1.53.0
+    helm.sh/chart: jaeger-3.0.9
+  name: jaeger-collector
+  namespace: jaeger
+  resourceVersion: "80921"
+  #uid: 23d62bcb-7533-46c7-929e-704886243516
+spec:
+  clusterIP: 10.104.130.121
+  clusterIPs:
+  - 10.104.130.121
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - appProtocol: grpc
+    name: grpc
+    port: 14250
+    protocol: TCP
+    targetPort: grpc
+  - appProtocol: http
+    name: http
+    port: 14268
+    protocol: TCP
+    targetPort: http
+  - name: admin
+    port: 14269
+    protocol: TCP
+    targetPort: admin
+  selector:
+    app.kubernetes.io/component: collector
+    app.kubernetes.io/instance: jaeger
+    app.kubernetes.io/name: jaeger
+  sessionAffinity: None
+  type: ClusterIP
